@@ -22,17 +22,17 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('profile');
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Header */}
-      <header className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50 sticky top-0 z-20">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-20 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-3">
           <div className="flex items-center gap-3 mb-1">
             <span className="text-2xl">&#x1F1E6;&#x1F1FA;</span>
             <div>
-              <h1 className="text-lg font-bold text-white tracking-tight">
+              <h1 className="text-lg font-bold text-gray-900 tracking-tight">
                 Jack O'Loughlin — Scouting Report
               </h1>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-gray-500">
                 LHP | 6'5" / 223 lbs | Colorado Rockies org | WBC 2026 Pool C
               </p>
             </div>
@@ -48,8 +48,8 @@ export default function App() {
                 onClick={() => setTab(t.id)}
                 className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
                   tab === t.id
-                    ? 'border-blue-500 text-blue-400'
-                    : 'border-transparent text-slate-500 hover:text-slate-300 hover:border-slate-600'
+                    ? 'border-blue-600 text-blue-600'
+                    : 'border-transparent text-gray-400 hover:text-gray-600 hover:border-gray-300'
                 }`}
               >
                 {t.label}
@@ -73,9 +73,9 @@ export default function App() {
         {tab === 'location' && (
           <div className="space-y-6">
             <div className="text-center mb-2">
-              <h2 className="text-sm font-semibold text-slate-300">
+              <h2 className="text-sm font-semibold text-gray-700">
                 WBC 2026 투구 로케이션
-                <span className="text-slate-500 font-normal ml-2">vs TPE | {WBC_PITCHES.length}구</span>
+                <span className="text-gray-400 font-normal ml-2">vs TPE | {WBC_PITCHES.length}구</span>
               </h2>
             </div>
             <PitchLocationChart pitches={WBC_PITCHES} />
@@ -93,7 +93,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="text-center text-[10px] text-slate-600 py-4 border-t border-slate-800 max-w-5xl mx-auto">
+      <footer className="text-center text-[10px] text-gray-400 py-4 border-t border-gray-200 max-w-5xl mx-auto">
         Data: MLB Stats API (Statcast) | pybaseball | KBO 2024 DB | Pitcher's perspective view
       </footer>
     </div>

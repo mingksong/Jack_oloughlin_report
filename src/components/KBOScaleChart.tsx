@@ -15,13 +15,13 @@ interface PctRow {
 function PercentileGauge({ value, label, color }: { value: number; label: string; color: string }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[10px] text-slate-500 w-10 text-right flex-shrink-0">{label}</span>
-      <div className="flex-1 h-5 bg-slate-900 rounded-full overflow-hidden relative">
+      <span className="text-[10px] text-gray-400 w-10 text-right flex-shrink-0">{label}</span>
+      <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden relative">
         {/* Zone markers */}
         <div className="absolute inset-0 flex">
-          <div className="w-1/4 border-r border-slate-700/50" />
-          <div className="w-1/4 border-r border-slate-700/50" />
-          <div className="w-1/4 border-r border-slate-700/50" />
+          <div className="w-1/4 border-r border-gray-200" />
+          <div className="w-1/4 border-r border-gray-200" />
+          <div className="w-1/4 border-r border-gray-200" />
           <div className="w-1/4" />
         </div>
         {/* Fill */}
@@ -30,7 +30,7 @@ function PercentileGauge({ value, label, color }: { value: number; label: string
           style={{
             width: `${value}%`,
             backgroundColor: color,
-            opacity: 0.9,
+            opacity: 0.85,
           }}
         >
           <span className="text-[10px] font-bold text-white drop-shadow">
@@ -83,11 +83,11 @@ export default function KBOScaleChart() {
   return (
     <div className="space-y-6">
       {/* Percentile Gauges */}
-      <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-        <h3 className="text-sm font-semibold text-slate-300 mb-1">
+      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+        <h3 className="text-sm font-semibold text-gray-700 mb-1">
           KBO 퍼센타일 비교 (평균 구속 기준)
         </h3>
-        <p className="text-[10px] text-slate-500 mb-4">
+        <p className="text-[10px] text-gray-400 mb-4">
           O'Loughlin WBC 구속을 2024 KBO 리그 구속 분포와 비교
         </p>
 
@@ -98,11 +98,11 @@ export default function KBOScaleChart() {
               <div key={row.code}>
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                  <span className="text-xs font-semibold text-white">
+                  <span className="text-xs font-semibold text-gray-900">
                     {PITCH_NAMES_KR[row.code] ?? row.code}
                   </span>
-                  <span className="text-[10px] text-slate-400 ml-auto">
-                    {row.avgMph}mph = {row.avgKmh}km/h
+                  <span className="text-[10px] text-gray-400 ml-auto">
+                    {row.avgKmh}km/h ({row.avgMph}mph)
                   </span>
                 </div>
                 <div className="space-y-1">
@@ -115,7 +115,7 @@ export default function KBOScaleChart() {
         </div>
 
         {/* Percentile scale */}
-        <div className="flex justify-between mt-3 text-[9px] text-slate-600 px-12">
+        <div className="flex justify-between mt-3 text-[9px] text-gray-400 px-12">
           <span>P25</span>
           <span>P50</span>
           <span>P75</span>
@@ -124,12 +124,12 @@ export default function KBOScaleChart() {
       </div>
 
       {/* Summary Table */}
-      <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-        <h3 className="text-sm font-semibold text-slate-300 mb-3">구종별 KBO 스케일 요약</h3>
+      <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+        <h3 className="text-sm font-semibold text-gray-700 mb-3">구종별 KBO 스케일 요약</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr className="text-slate-500 border-b border-slate-700">
+              <tr className="text-gray-400 border-b border-gray-200">
                 <th className="text-left py-2 px-2">구종</th>
                 <th className="text-center py-2 px-2">WBC 평균</th>
                 <th className="text-center py-2 px-2">WBC 최고</th>
@@ -145,30 +145,30 @@ export default function KBOScaleChart() {
                   row.kboLhpPct >= 80 ? 'Plus' :
                   row.kboLhpPct >= 60 ? 'Above Avg' :
                   row.kboLhpPct >= 40 ? 'Average' : 'Below Avg';
-                const gradeColor = row.kboLhpPct >= 95 ? 'text-red-400' :
-                  row.kboLhpPct >= 80 ? 'text-orange-400' :
-                  row.kboLhpPct >= 60 ? 'text-yellow-400' :
-                  row.kboLhpPct >= 40 ? 'text-green-400' : 'text-slate-400';
+                const gradeColor = row.kboLhpPct >= 95 ? 'text-red-600' :
+                  row.kboLhpPct >= 80 ? 'text-orange-600' :
+                  row.kboLhpPct >= 60 ? 'text-yellow-600' :
+                  row.kboLhpPct >= 40 ? 'text-green-600' : 'text-gray-500';
 
                 return (
-                  <tr key={row.code} className="border-b border-slate-700/50">
+                  <tr key={row.code} className="border-b border-gray-100">
                     <td className="py-2 px-2">
                       <span className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
                         {PITCH_NAMES_KR[row.code] ?? row.code}
                       </span>
                     </td>
-                    <td className="text-center py-2 px-2 text-slate-300">
+                    <td className="text-center py-2 px-2 text-gray-700">
                       {row.avgKmh} km/h
                     </td>
-                    <td className="text-center py-2 px-2 text-slate-300">
+                    <td className="text-center py-2 px-2 text-gray-700">
                       {row.maxKmh} km/h
                     </td>
                     <td className="text-center py-2 px-2">
-                      <span className="font-bold text-white">{row.kboAllPct}</span>
+                      <span className="font-bold text-gray-900">{row.kboAllPct}</span>
                     </td>
                     <td className="text-center py-2 px-2">
-                      <span className="font-bold text-white">{row.kboLhpPct}</span>
+                      <span className="font-bold text-gray-900">{row.kboLhpPct}</span>
                     </td>
                     <td className={`text-center py-2 px-2 font-semibold ${gradeColor}`}>
                       {grade}

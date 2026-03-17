@@ -11,6 +11,7 @@ interface PitchStats {
   minSpeed: number;
   avgSpeedKmh: number;
   maxSpeedKmh: number;
+  minSpeedKmh: number;
 }
 
 export default function PitchArsenalCards() {
@@ -35,6 +36,7 @@ export default function PitchArsenalCards() {
         minSpeed: min,
         avgSpeedKmh: mphToKmh(avg),
         maxSpeedKmh: mphToKmh(max),
+        minSpeedKmh: mphToKmh(min),
       });
     }
     return result.sort((a, b) => b.count - a.count);
@@ -45,14 +47,14 @@ export default function PitchArsenalCards() {
   return (
     <div className="space-y-6">
       {/* Summary Bar */}
-      <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-        <h3 className="text-sm font-semibold text-slate-300 mb-3">
+      <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
+        <h3 className="text-sm font-semibold text-gray-700 mb-3">
           구종 사용 비율
-          <span className="text-slate-500 font-normal ml-2">WBC {WBC_PITCHES.length}구 | MLB {MLB_STATCAST.totals.pitches}구</span>
+          <span className="text-gray-400 font-normal ml-2">WBC {WBC_PITCHES.length}구 | MLB {MLB_STATCAST.totals.pitches}구</span>
         </h3>
         {/* WBC bar */}
         <div className="mb-2">
-          <span className="text-[10px] text-slate-500 mb-1 block">WBC 2026</span>
+          <span className="text-[10px] text-gray-400 mb-1 block">WBC 2026</span>
           <div className="flex h-6 rounded overflow-hidden">
             {wbcStats.map(s => (
               <div
@@ -71,7 +73,7 @@ export default function PitchArsenalCards() {
         </div>
         {/* MLB bar */}
         <div>
-          <span className="text-[10px] text-slate-500 mb-1 block">MLB 2024</span>
+          <span className="text-[10px] text-gray-400 mb-1 block">MLB 2024</span>
           <div className="flex h-6 rounded overflow-hidden">
             {Object.entries(mlbTypes)
               .sort((a, b) => b[1].pct - a[1].pct)
@@ -100,53 +102,53 @@ export default function PitchArsenalCards() {
           return (
             <div
               key={wbc.code}
-              className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50"
+              className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm"
             >
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }} />
-                <h4 className="text-sm font-bold text-white">
+                <h4 className="text-sm font-bold text-gray-900">
                   {PITCH_NAMES_KR[wbc.code] ?? wbc.code}
-                  <span className="text-slate-500 font-normal ml-1">({wbc.code})</span>
+                  <span className="text-gray-400 font-normal ml-1">({wbc.code})</span>
                 </h4>
-                <span className="ml-auto text-xs text-slate-400">
+                <span className="ml-auto text-xs text-gray-500">
                   WBC {wbc.count}구 ({wbc.pct.toFixed(0)}%)
                 </span>
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="bg-slate-900/50 rounded p-2">
-                  <div className="text-[10px] text-slate-500">평균 구속</div>
+                <div className="bg-gray-50 rounded p-2">
+                  <div className="text-[10px] text-gray-400">평균 구속</div>
                   <div className="text-lg font-bold" style={{ color }}>
-                    {wbc.avgSpeed}
+                    {wbc.avgSpeedKmh}
                   </div>
-                  <div className="text-[10px] text-slate-500">mph ({wbc.avgSpeedKmh}km/h)</div>
+                  <div className="text-[10px] text-gray-400">km/h ({wbc.avgSpeed}mph)</div>
                 </div>
-                <div className="bg-slate-900/50 rounded p-2">
-                  <div className="text-[10px] text-slate-500">최고 구속</div>
-                  <div className="text-lg font-bold text-white">{wbc.maxSpeed}</div>
-                  <div className="text-[10px] text-slate-500">mph ({wbc.maxSpeedKmh}km/h)</div>
+                <div className="bg-gray-50 rounded p-2">
+                  <div className="text-[10px] text-gray-400">최고 구속</div>
+                  <div className="text-lg font-bold text-gray-900">{wbc.maxSpeedKmh}</div>
+                  <div className="text-[10px] text-gray-400">km/h ({wbc.maxSpeed}mph)</div>
                 </div>
-                <div className="bg-slate-900/50 rounded p-2">
-                  <div className="text-[10px] text-slate-500">구속 범위</div>
-                  <div className="text-sm font-bold text-slate-300 mt-1">
-                    {wbc.minSpeed}-{wbc.maxSpeed}
+                <div className="bg-gray-50 rounded p-2">
+                  <div className="text-[10px] text-gray-400">구속 범위</div>
+                  <div className="text-sm font-bold text-gray-700 mt-1">
+                    {wbc.minSpeedKmh}-{wbc.maxSpeedKmh}
                   </div>
-                  <div className="text-[10px] text-slate-500">mph</div>
+                  <div className="text-[10px] text-gray-400">km/h</div>
                 </div>
               </div>
 
               {/* MLB comparison */}
               {mlb && (
-                <div className="mt-3 pt-3 border-t border-slate-700/50">
+                <div className="mt-3 pt-3 border-t border-gray-100">
                   <div className="flex justify-between text-[11px]">
-                    <span className="text-slate-500">MLB 2024 평균</span>
-                    <span className="text-slate-300">
-                      {mlb.avgSpeed} mph | {mlb.avgSpin} rpm | {mlb.count}구 ({mlb.pct}%)
+                    <span className="text-gray-400">MLB 2024 평균</span>
+                    <span className="text-gray-600">
+                      {mphToKmh(mlb.avgSpeed)}km/h ({mlb.avgSpeed}mph) | {mlb.avgSpin}rpm | {mlb.count}구 ({mlb.pct}%)
                     </span>
                   </div>
                   {wbc.avgSpeed > mlb.avgSpeed && (
-                    <div className="text-[10px] text-green-400 mt-1">
-                      WBC에서 +{(wbc.avgSpeed - mlb.avgSpeed).toFixed(1)}mph 상승
+                    <div className="text-[10px] text-green-600 mt-1">
+                      WBC에서 +{mphToKmh(wbc.avgSpeed - mlb.avgSpeed)}km/h 상승 (+{(wbc.avgSpeed - mlb.avgSpeed).toFixed(1)}mph)
                     </div>
                   )}
                 </div>

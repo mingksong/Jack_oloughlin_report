@@ -11,6 +11,7 @@ interface CompRow {
   kboP75: number;
   kboP95: number;
   wbcKmh: number;
+  mlbKmh: number | null;
 }
 
 export default function VelocityComparison() {
@@ -38,14 +39,15 @@ export default function VelocityComparison() {
         kboP75: kbo?.p75 ?? 0,
         kboP95: kbo?.p95 ?? 0,
         wbcKmh: mphToKmh(avg),
+        mlbKmh: mlbData ? mphToKmh(mlbData.avgSpeed) : null,
       });
     }
     return result.sort((a, b) => b.wbcAvg - a.wbcAvg);
   }, []);
 
   return (
-    <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-      <h3 className="text-sm font-semibold text-slate-300 mb-4">
+    <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+      <h3 className="text-sm font-semibold text-gray-700 mb-4">
         구속 비교: MLB vs WBC vs KBO(좌완)
       </h3>
 
@@ -53,7 +55,6 @@ export default function VelocityComparison() {
       <div className="space-y-4">
         {rows.map(row => {
           const color = PITCH_COLORS[row.code] ?? '#6b7280';
-          // Scale: use KBO range, min = P50-10, max = P95+10
           const scaleMin = row.kboP50 - 10;
           const scaleMax = row.kboP95 + 10;
           const range = scaleMax - scaleMin;
@@ -63,23 +64,23 @@ export default function VelocityComparison() {
             <div key={row.code}>
               <div className="flex items-center gap-2 mb-1">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                <span className="text-xs font-semibold text-white">
+                <span className="text-xs font-semibold text-gray-900">
                   {PITCH_NAMES_KR[row.code] ?? row.code}
                 </span>
               </div>
 
               {/* Bar chart */}
-              <div className="relative h-10 bg-slate-900 rounded-lg overflow-hidden">
+              <div className="relative h-10 bg-gray-100 rounded-lg overflow-hidden">
                 {/* KBO distribution zones */}
                 <div
-                  className="absolute top-0 h-full bg-slate-700/30"
+                  className="absolute top-0 h-full bg-gray-200/60"
                   style={{
                     left: `${toPercent(row.kboP50)}%`,
                     width: `${toPercent(row.kboP75) - toPercent(row.kboP50)}%`,
                   }}
                 />
                 <div
-                  className="absolute top-0 h-full bg-slate-600/20"
+                  className="absolute top-0 h-full bg-gray-300/40"
                   style={{
                     left: `${toPercent(row.kboP75)}%`,
                     width: `${toPercent(row.kboP95) - toPercent(row.kboP75)}%`,
@@ -88,54 +89,54 @@ export default function VelocityComparison() {
 
                 {/* KBO P50 marker */}
                 <div
-                  className="absolute top-0 h-full w-px bg-slate-500"
+                  className="absolute top-0 h-full w-px bg-gray-400"
                   style={{ left: `${toPercent(row.kboP50)}%` }}
                 />
                 {/* KBO P95 marker */}
                 <div
-                  className="absolute top-0 h-full w-px bg-yellow-600/60"
+                  className="absolute top-0 h-full w-px bg-orange-400/60"
                   style={{ left: `${toPercent(row.kboP95)}%` }}
                 />
 
                 {/* MLB marker */}
-                {row.mlbAvg && (
+                {row.mlbKmh && (
                   <div
-                    className="absolute top-1 h-3 w-3 rounded-full border-2 border-white bg-slate-800"
-                    style={{ left: `calc(${toPercent(mphToKmh(row.mlbAvg))}% - 6px)` }}
-                    title={`MLB avg: ${row.mlbAvg}mph`}
+                    className="absolute top-1 h-3 w-3 rounded-full border-2 border-gray-500 bg-white"
+                    style={{ left: `calc(${toPercent(row.mlbKmh)}% - 6px)` }}
+                    title={`MLB avg: ${row.mlbKmh}km/h`}
                   />
                 )}
 
                 {/* WBC marker (main) */}
                 <div
-                  className="absolute bottom-1 h-4 w-4 rounded-full border-2 border-white"
+                  className="absolute bottom-1 h-4 w-4 rounded-full border-2 border-white shadow"
                   style={{
                     left: `calc(${toPercent(row.wbcKmh)}% - 8px)`,
                     backgroundColor: color,
                   }}
-                  title={`WBC avg: ${row.wbcAvg}mph`}
+                  title={`WBC avg: ${row.wbcKmh}km/h`}
                 />
 
                 {/* Labels */}
-                <div className="absolute top-0.5 right-2 text-[9px] text-slate-500">
+                <div className="absolute top-0.5 right-2 text-[9px] text-gray-400">
                   KBO P50: {row.kboP50} | P95: {row.kboP95} km/h
                 </div>
               </div>
 
               {/* Numbers */}
               <div className="flex gap-4 mt-1 text-[10px]">
-                <span className="text-slate-400">
-                  WBC: <span className="text-white font-bold">{row.wbcAvg}mph</span>
-                  <span className="text-slate-500"> ({row.wbcKmh}km/h)</span>
+                <span className="text-gray-500">
+                  WBC: <span className="text-gray-900 font-bold">{row.wbcKmh}km/h</span>
+                  <span className="text-gray-400"> ({row.wbcAvg}mph)</span>
                 </span>
-                {row.mlbAvg && (
-                  <span className="text-slate-400">
-                    MLB: <span className="text-slate-300">{row.mlbAvg}mph</span>
-                    <span className="text-slate-500"> ({mphToKmh(row.mlbAvg)}km/h)</span>
+                {row.mlbKmh && (
+                  <span className="text-gray-500">
+                    MLB: <span className="text-gray-700">{row.mlbKmh}km/h</span>
+                    <span className="text-gray-400"> ({row.mlbAvg}mph)</span>
                   </span>
                 )}
                 {row.mlbAvg && row.wbcAvg > row.mlbAvg && (
-                  <span className="text-green-400">+{(row.wbcAvg - row.mlbAvg).toFixed(1)}mph</span>
+                  <span className="text-green-600">+{mphToKmh(row.wbcAvg - row.mlbAvg)}km/h</span>
                 )}
               </div>
             </div>
@@ -144,21 +145,21 @@ export default function VelocityComparison() {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-4 mt-4 pt-3 border-t border-slate-700/50 text-[10px] text-slate-500">
+      <div className="flex flex-wrap gap-4 mt-4 pt-3 border-t border-gray-100 text-[10px] text-gray-400">
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded-full border-2 border-white bg-slate-800 inline-block" />
+          <span className="w-3 h-3 rounded-full border-2 border-gray-500 bg-white inline-block" />
           MLB 평균
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded-full border-2 border-white bg-blue-500 inline-block" />
+          <span className="w-3 h-3 rounded-full border-2 border-white bg-blue-500 inline-block shadow" />
           WBC 평균
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-4 bg-slate-700/30 inline-block rounded" />
+          <span className="w-2 h-4 bg-gray-200/60 inline-block rounded" />
           KBO P50-P75
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-4 bg-slate-600/20 inline-block rounded" />
+          <span className="w-2 h-4 bg-gray-300/40 inline-block rounded" />
           KBO P75-P95
         </span>
       </div>
