@@ -10,6 +10,7 @@ import KBOScaleChart from './components/KBOScaleChart';
 import ScoutingGradeTable from './components/ScoutingGradeTable';
 import ReleasePointAnalysis from './components/ReleasePointAnalysis';
 import MovementProfile from './components/MovementProfile';
+import ComparablePitchers from './components/ComparablePitchers';
 
 type Tab = 'profile' | 'arsenal' | 'location' | 'movement' | 'kbo';
 
@@ -91,6 +92,7 @@ export default function App() {
           <div className="space-y-6">
             <MovementProfile />
             <ReleasePointAnalysis />
+            <ComparablePitchers />
           </div>
         )}
 

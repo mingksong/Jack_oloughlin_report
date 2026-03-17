@@ -183,6 +183,10 @@ export default function KBOScaleChart() {
           </table>
         </div>
       </div>
+
+      <p className="text-[9px] text-gray-400 px-2 mt-2">
+        * 구속 데이터는 KBO 공식 기록 기반 실측치입니다.
+      </p>
     </div>
   );
 }

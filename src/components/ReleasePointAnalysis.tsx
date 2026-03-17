@@ -80,7 +80,7 @@ function ExtensionComparison() {
               <span className="text-xs font-bold text-blue-700 mt-1">{extension}ft</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-[10px] text-gray-400 mb-1">KBO 좌완 avg</span>
+              <span className="text-[10px] text-gray-400 mb-1"><b>KBO 추정</b> 좌완 avg</span>
               <div
                 className="w-12 bg-gray-300 rounded-t"
                 style={{ height: `${(kboAvgExt / 7) * 100}px` }}
@@ -112,9 +112,9 @@ export default function ReleasePointAnalysis() {
         </h3>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-          <StatBox label="릴리스 높이" value={`${rp.releaseZ}ft`} sub={`KBO 좌완 avg: ${kboRel.avgReleaseZ}ft`} highlight />
+          <StatBox label="릴리스 높이" value={`${rp.releaseZ}ft`} sub={`KBO 추정 좌완 avg: ${kboRel.avgReleaseZ}ft`} highlight />
           <StatBox label="수평 릴리스" value={`${rp.releaseX}ft`} sub="1B 방향 (좌완 특성)" />
-          <StatBox label="익스텐션" value={`${rp.extension}ft`} sub={`KBO 좌완 avg: ~${kboRel.avgExtension}ft`} highlight />
+          <StatBox label="익스텐션" value={`${rp.extension}ft`} sub={`KBO 추정 좌완 avg: ~${kboRel.avgExtension}ft`} highlight />
           <StatBox label="팔 각도" value={`${rp.armAngle}°`} sub="3/4 arm slot" />
         </div>
 
@@ -125,6 +125,12 @@ export default function ReleasePointAnalysis() {
       <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
         <ExtensionComparison />
       </div>
+
+      {/* Estimation disclaimer */}
+      <p className="text-[9px] text-gray-400 px-2">
+        * KBO 릴리스/익스텐션 데이터는 trajectory 원시 데이터(x0, z0)에서 <b>추정 계산</b>한 수치입니다.
+        MLB Statcast급 정밀 트래킹과 차이가 있을 수 있습니다.
+      </p>
     </div>
   );
 }

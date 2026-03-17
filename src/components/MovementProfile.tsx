@@ -113,11 +113,11 @@ function MovementChart() {
         </span>
         <span className="flex items-center gap-1">
           <span className="w-3 h-3 rounded-full bg-gray-300 border border-gray-400 inline-block" />
-          KBO 좌완 avg
+          <b>KBO 추정</b> 좌완 avg
         </span>
         <span className="flex items-center gap-1">
           <span className="w-6 h-3 border border-dashed border-gray-400 rounded inline-block" />
-          KBO ±1 SD
+          <b>KBO 추정</b> ±1 SD
         </span>
       </div>
     </div>
@@ -143,9 +143,9 @@ function MovementTable() {
           <tr className="text-[9px] text-gray-300 border-b border-gray-100">
             <th />
             <th className="text-center px-1">O'L</th>
-            <th className="text-center px-1">KBO</th>
+            <th className="text-center px-1">KBO(추정)</th>
             <th className="text-center px-1">O'L</th>
-            <th className="text-center px-1">KBO</th>
+            <th className="text-center px-1">KBO(추정)</th>
             <th className="text-center px-1">rpm</th>
             <th />
           </tr>
@@ -209,22 +209,22 @@ function MovementInsights() {
   const insights = [
     {
       title: '직구: 수직 무브먼트 상위',
-      desc: `유도 수직 변화 ${mlb.FF.pfxZ.toFixed(1)}in (KBO 좌완 avg ${kbo['직구'].pfxZ.toFixed(1)}in 대비 +${ffVbDiff.toFixed(1)}in). 높은 릴리스 + 강한 백스핀 조합으로 떠오르는 직구 효과.`,
+      desc: `유도 수직 변화 ${mlb.FF.pfxZ.toFixed(1)}in (KBO 추정 좌완 avg ${kbo['직구'].pfxZ.toFixed(1)}in 대비 +${ffVbDiff.toFixed(1)}in). 높은 릴리스 + 강한 백스핀 조합으로 떠오르는 직구 효과.`,
       type: 'strength' as const,
     },
     {
       title: '직구: 수평 런 역시 상위',
-      desc: `Arm-side run ${mlb.FF.pfxX.toFixed(1)}in (KBO avg ${kbo['직구'].pfxX.toFixed(1)}in 대비 +${ffHbDiff.toFixed(1)}in). 좌타자 몸쪽 테일링 패스트볼 효과적.`,
+      desc: `Arm-side run ${mlb.FF.pfxX.toFixed(1)}in (KBO 추정 avg ${kbo['직구'].pfxX.toFixed(1)}in 대비 +${ffHbDiff.toFixed(1)}in). 좌타자 몸쪽 테일링 패스트볼 효과적.`,
       type: 'strength' as const,
     },
     {
       title: '체인지업: 직구 미러링 우수',
-      desc: `Arm-side fade ${mlb.CH.pfxX.toFixed(1)}in으로 직구(${mlb.FF.pfxX.toFixed(1)}in)와 유사한 수평 궤적 + 속도차로 타자 기만. KBO 좌완 대비 +${chArmDiff.toFixed(1)}in.`,
+      desc: `Arm-side fade ${mlb.CH.pfxX.toFixed(1)}in으로 직구(${mlb.FF.pfxX.toFixed(1)}in)와 유사한 수평 궤적 + 속도차로 타자 기만. KBO 추정 좌완 대비 +${chArmDiff.toFixed(1)}in.`,
       type: 'strength' as const,
     },
     {
       title: '커브: KBO와 유사 프로파일',
-      desc: `수직 드롭 ${mlb.CU.pfxZ.toFixed(1)}in, 글러브 사이드 ${mlb.CU.pfxX.toFixed(1)}in. KBO 좌완과 큰 차이 없으나 MLB 경험 부족으로 커맨드 불안정.`,
+      desc: `수직 드롭 ${mlb.CU.pfxZ.toFixed(1)}in, 글러브 사이드 ${mlb.CU.pfxX.toFixed(1)}in. KBO 추정 좌완과 큰 차이 없으나 MLB 경험 부족으로 커맨드 불안정.`,
       type: 'neutral' as const,
     },
   ];
@@ -263,7 +263,8 @@ export default function MovementProfile() {
           <span className="text-gray-400 font-normal ml-2">(MLB Statcast vs KBO 좌완)</span>
         </h3>
         <p className="text-[10px] text-gray-400 mb-4">
-          Induced movement in inches. 점선 원 = KBO 좌완 ±1 표준편차.
+          Induced movement in inches. 점선 원 = <b>KBO 추정</b> 좌완 ±1 표준편차.
+          KBO 무브먼트는 trajectory 원시 데이터에서 추정 계산한 수치입니다.
         </p>
         <MovementChart />
       </div>

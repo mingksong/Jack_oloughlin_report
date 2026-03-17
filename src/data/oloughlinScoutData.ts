@@ -144,6 +144,102 @@ export function kboPercentile(kmh: number, dist: { p25: number; p50: number; p75
   return Math.min(99, 95 + Math.round(((kmh - dist.p95) / 5) * 4));
 }
 
+// ========== KBO COMPARABLE PITCHERS (similar release point LHP, 2024-2025) ==========
+// z0/x0 from trajectory raw data — estimated values, not Statcast-grade tracking
+export const KBO_COMPARABLE_PITCHERS = [
+  {
+    name: '요키시',
+    team: 'NC',
+    height: '188cm',
+    releaseZ: 5.886,
+    releaseX: 2.11,
+    extension: null,
+    ffSpeed: 140.7,
+    ffPfxX: 14.2, ffPfxZ: 12.6,
+    pitchTypes: [
+      { type: '투심', speed: 140.7, pfxX: 14.2, pfxZ: 12.6, count: 339 },
+      { type: '커브', speed: 123.3, pfxX: -2.7, pfxZ: -2.5, count: 196 },
+      { type: '체인지업', speed: 130.0, pfxX: 15.5, pfxZ: 11.0, count: 183 },
+    ],
+    seasons: '2024-2025',
+    pitchCount: 741,
+    z0Diff: 0.004,
+  },
+  {
+    name: '조동욱',
+    team: '한화',
+    height: '190cm',
+    releaseZ: 5.899,
+    releaseX: 2.43,
+    extension: null,
+    ffSpeed: 142.1,
+    ffPfxX: 11.6, ffPfxZ: 15.0,
+    pitchTypes: [
+      { type: '직구', speed: 142.1, pfxX: 11.6, pfxZ: 15.0, count: 922 },
+      { type: '슬라이더', speed: 125.4, pfxX: 1.3, pfxZ: 2.2, count: 565 },
+      { type: '체인지업', speed: 125.0, pfxX: 11.8, pfxZ: 9.0, count: 371 },
+    ],
+    seasons: '2024-2025',
+    pitchCount: 1868,
+    z0Diff: 0.009,
+  },
+  {
+    name: '함덕주',
+    team: 'LG',
+    height: '181cm',
+    releaseZ: 5.924,
+    releaseX: 1.88,
+    extension: null,
+    ffSpeed: 138.5,
+    ffPfxX: 8.8, ffPfxZ: 17.1,
+    pitchTypes: [
+      { type: '직구', speed: 138.5, pfxX: 8.8, pfxZ: 17.1, count: 350 },
+      { type: '체인지업', speed: 124.5, pfxX: 11.3, pfxZ: 7.0, count: 200 },
+      { type: '슬라이더', speed: 124.8, pfxX: -1.5, pfxZ: 5.6, count: 109 },
+    ],
+    seasons: '2024-2025',
+    pitchCount: 662,
+    z0Diff: 0.034,
+  },
+  {
+    name: '이의리',
+    team: 'KIA',
+    height: '185cm',
+    releaseZ: 5.933,
+    releaseX: 1.74,
+    extension: null,
+    ffSpeed: 147.1,
+    ffPfxX: 9.7, ffPfxZ: 18.9,
+    pitchTypes: [
+      { type: '직구', speed: 147.1, pfxX: 9.7, pfxZ: 18.9, count: 537 },
+      { type: '슬라이더', speed: 134.0, pfxX: 0.4, pfxZ: 6.4, count: 266 },
+      { type: '체인지업', speed: 132.1, pfxX: 10.4, pfxZ: 9.2, count: 177 },
+      { type: '커브', speed: 123.0, pfxX: -5.4, pfxZ: -8.5, count: 128 },
+    ],
+    seasons: '2024-2025',
+    pitchCount: 1174,
+    z0Diff: 0.043,
+  },
+  {
+    name: '이우찬',
+    team: 'LG',
+    height: '185cm',
+    releaseZ: 5.936,
+    releaseX: 1.69,
+    extension: null,
+    ffSpeed: 143.1,
+    ffPfxX: 9.5, ffPfxZ: 14.6,
+    pitchTypes: [
+      { type: '직구', speed: 143.1, pfxX: 9.5, pfxZ: 14.6, count: 483 },
+      { type: '슬라이더', speed: 132.5, pfxX: -0.6, pfxZ: 6.3, count: 262 },
+      { type: '포크', speed: 132.5, pfxX: 11.7, pfxZ: 4.6, count: 248 },
+    ],
+    seasons: '2024-2025',
+    pitchCount: 1136,
+    z0Diff: 0.046,
+  },
+];
+
 // ========== SCOUTING GRADES (20-80 scale) ==========
 export const SCOUTING_GRADES = {
   // Based on MLB regular season + WBC performance
