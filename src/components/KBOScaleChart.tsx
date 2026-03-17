@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { WBC_PITCHES, KBO_VELOCITY_DIST, mphToKmh, kboPercentile, PITCH_TO_KBO } from '../data/oloughlinScoutData';
 import { PITCH_COLORS, PITCH_NAMES_KR } from '../utils/pitchColors';
 
+const STARTER_DISCOUNT = 0.9875; // 1.25% 감소 (3이닝 릴리프 → 선발 5~6이닝 예상)
+
 interface PctRow {
   code: string;
   avgMph: number;
@@ -10,12 +12,15 @@ interface PctRow {
   maxKmh: number;
   kboAllPct: number;
   kboLhpPct: number;
+  starterKmh: number;
+  starterAllPct: number;
+  starterLhpPct: number;
 }
 
-function PercentileGauge({ value, label, color }: { value: number; label: string; color: string }) {
+function PercentileGauge({ value, label, color, dimmed }: { value: number; label: string; color: string; dimmed?: boolean }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[10px] text-gray-400 w-10 text-right flex-shrink-0">{label}</span>
+      <span className="text-[10px] text-gray-400 w-16 text-right flex-shrink-0">{label}</span>
       <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden relative">
         {/* Zone markers */}
         <div className="absolute inset-0 flex">
@@ -30,7 +35,7 @@ function PercentileGauge({ value, label, color }: { value: number; label: string
           style={{
             width: `${value}%`,
             backgroundColor: color,
-            opacity: 0.85,
+            opacity: dimmed ? 0.5 : 0.85,
           }}
         >
           <span className="text-[10px] font-bold text-white drop-shadow">
@@ -56,15 +61,24 @@ export default function KBOScaleChart() {
       const max = Math.max(...speeds);
       const avgKmh = mphToKmh(avg);
       const maxKmh = mphToKmh(max);
+      const starterKmh = Math.round(avgKmh * STARTER_DISCOUNT * 10) / 10;
       const kboName = PITCH_TO_KBO[code];
 
       let kboAllPct = 0;
       let kboLhpPct = 0;
+      let starterAllPct = 0;
+      let starterLhpPct = 0;
       if (kboName) {
         const allDist = KBO_VELOCITY_DIST.all[kboName as keyof typeof KBO_VELOCITY_DIST.all];
         const lhpDist = KBO_VELOCITY_DIST.lhp[kboName as keyof typeof KBO_VELOCITY_DIST.lhp];
-        if (allDist) kboAllPct = kboPercentile(avgKmh, allDist);
-        if (lhpDist) kboLhpPct = kboPercentile(avgKmh, lhpDist);
+        if (allDist) {
+          kboAllPct = kboPercentile(avgKmh, allDist);
+          starterAllPct = kboPercentile(starterKmh, allDist);
+        }
+        if (lhpDist) {
+          kboLhpPct = kboPercentile(avgKmh, lhpDist);
+          starterLhpPct = kboPercentile(starterKmh, lhpDist);
+        }
       }
 
       result.push({
@@ -73,8 +87,11 @@ export default function KBOScaleChart() {
         avgKmh,
         maxMph: max,
         maxKmh,
+        starterKmh,
         kboAllPct,
         kboLhpPct,
+        starterAllPct,
+        starterLhpPct,
       });
     }
     return result.sort((a, b) => b.avgMph - a.avgMph);
@@ -89,6 +106,8 @@ export default function KBOScaleChart() {
         </h3>
         <p className="text-[10px] text-gray-400 mb-4">
           구속(Velocity)만을 기준으로 한 퍼센타일. 무브먼트·커맨드 등 구종의 전체 퀄리티와는 별개 지표입니다.
+          <br />
+          <span className="text-orange-500">선발 예상</span>: WBC 3이닝 릴리프 등판 대비 선발(5~6이닝) 시 약 1~1.5% 구속 하락 추정 적용.
         </p>
 
         <div className="space-y-4">
@@ -103,11 +122,13 @@ export default function KBOScaleChart() {
                   </span>
                   <span className="text-[10px] text-gray-400 ml-auto">
                     {row.avgKmh}km/h ({row.avgMph}mph)
+                    <span className="text-orange-400 ml-1">→ 선발 ~{row.starterKmh}km/h</span>
                   </span>
                 </div>
                 <div className="space-y-1">
                   <PercentileGauge value={row.kboAllPct} label="전체" color={color} />
                   <PercentileGauge value={row.kboLhpPct} label="좌완" color={color} />
+                  <PercentileGauge value={row.starterLhpPct} label="선발 예상" color="#f97316" dimmed />
                 </div>
               </div>
             );
@@ -116,10 +137,10 @@ export default function KBOScaleChart() {
 
         {/* Percentile scale */}
         <div className="flex justify-between mt-3 text-[9px] text-gray-400 px-12">
-          <span>P25</span>
-          <span>P50</span>
-          <span>P75</span>
-          <span>P100</span>
+          <span>25%</span>
+          <span>50%</span>
+          <span>75%</span>
+          <span>100%</span>
         </div>
       </div>
 
@@ -136,8 +157,9 @@ export default function KBOScaleChart() {
                 <th className="text-left py-2 px-2">구종</th>
                 <th className="text-center py-2 px-2">WBC 평균</th>
                 <th className="text-center py-2 px-2">WBC 최고</th>
-                <th className="text-center py-2 px-2">KBO 전체 %ile</th>
-                <th className="text-center py-2 px-2">KBO 좌완 %ile</th>
+                <th className="text-center py-2 px-2">KBO 전체 %</th>
+                <th className="text-center py-2 px-2">KBO 좌완 %</th>
+                <th className="text-center py-2 px-2">선발 예상 %</th>
                 <th className="text-center py-2 px-2">등급</th>
               </tr>
             </thead>
@@ -168,10 +190,13 @@ export default function KBOScaleChart() {
                       {row.maxKmh} km/h
                     </td>
                     <td className="text-center py-2 px-2">
-                      <span className="font-bold text-gray-900">{row.kboAllPct}</span>
+                      <span className="font-bold text-gray-900">{row.kboAllPct}%</span>
                     </td>
                     <td className="text-center py-2 px-2">
-                      <span className="font-bold text-gray-900">{row.kboLhpPct}</span>
+                      <span className="font-bold text-gray-900">{row.kboLhpPct}%</span>
+                    </td>
+                    <td className="text-center py-2 px-2">
+                      <span className="font-bold text-orange-500">{row.starterLhpPct}%</span>
                     </td>
                     <td className={`text-center py-2 px-2 font-semibold ${gradeColor}`}>
                       {grade}
@@ -185,7 +210,7 @@ export default function KBOScaleChart() {
       </div>
 
       <p className="text-[9px] text-gray-400 px-2 mt-2">
-        * 구속 데이터는 KBO 공식 기록 기반 실측치입니다.
+        * 구속 데이터는 KBO 공식 기록 기반 실측치입니다. 선발 예상은 3이닝 릴리프 대비 약 1.25% 구속 하락을 가정한 추정치입니다.
       </p>
     </div>
   );
