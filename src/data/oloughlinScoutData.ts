@@ -16,13 +16,13 @@ export const PROFILE = {
   weight: '223 lbs',
   number: 37,
   team: 'Colorado Rockies (MiLB)',
-  oneLiner: '호주 역대 38번째 MLB 선수, 오클랜드 A\'s에서 데뷔전 3이닝 무실점. 15개 팀이 경쟁한 FA 좌완으로 2026 WBC 대만전 승리 투수.',
+  oneLiner: '호주 역대 38번째 MLB 선수, 오클랜드 A\'s에서 데뷔전 3이닝 무실점. 다수 팀의 관심을 받은 FA 좌완으로 2026 WBC 대만전 승리 투수.',
   recentForm: '2024 MLB 데뷔(오클랜드 A\'s): 4G, 9.2IP, ERA 4.66, 6K. 데뷔전 휴스턴전 3이닝 무실점. 2026 WBC 대만전: 3IP, 2H, 0ER, 2K → 승리투수.',
   timeline: [
     { year: '2018', event: 'Detroit Tigers 산하 입단 (10대에 미국 진출)' },
-    { year: '2018-23', event: 'Tigers 마이너리그 6년, 통산 16-20, ERA 3.76' },
-    { year: '2023', event: 'Triple-A 직행 (Double-A 스킵), 6-10, ERA 3.99' },
-    { year: '2023.11', event: 'Oakland A\'s 마이너 계약 (15개 팀 경쟁)' },
+    { year: '2018-23', event: 'Tigers 마이너리그 6년, 커리어 ERA 3.76' },
+    { year: '2023', event: 'Triple-A 직행 (Double-A 스킵), 2023 시즌 6-10 (A+ & AAA)' },
+    { year: '2023.11', event: 'Oakland A\'s 마이너 계약 (다수 팀 관심)' },
     { year: '2024.5', event: 'MLB 데뷔 — 휴스턴전 3이닝 무실점' },
     { year: '2024', event: 'MLB 4경기, 9.2IP, ERA 4.66, 6K' },
     { year: '2024.11', event: 'Colorado Rockies 마이너 계약' },
@@ -34,16 +34,16 @@ export const PROFILE = {
       desc: '2024년 5월 오클랜드 A\'s에 콜업. 데뷔전 휴스턴 애스트로스 상대 3이닝 무실점(2안타 1볼넷 2삼진)의 인상적 데뷔.',
     },
     {
-      title: '15개 팀이 경쟁한 FA 좌완',
-      desc: '2023 시즌 후 15개 MLB 팀이 영입 경쟁. Double-A를 건너뛰고 Triple-A 직행한 성장 속도와 좌완 희소성이 높은 평가.',
+      title: '다수 팀이 관심 보인 FA 좌완',
+      desc: '2023 시즌 후 Tigers 산하에서 FA. Double-A를 건너뛰고 Triple-A 직행한 성장 속도와 좌완 희소성으로 다수 팀의 관심을 받아 오클랜드 A\'s 선택.',
     },
     {
       title: 'WBC 2026 대만전 좌완 트리오 완봉',
       desc: 'Wells(3IP) → O\'Loughlin(3IP) → Kennedy(3IP) 좌완 3인 릴레이로 대만 3안타 완봉(3-0). 중간 3이닝 무실점으로 승리투수.',
     },
     {
-      title: 'Te Haki — 마오리 유산',
-      desc: '미들 네임 "Te Haki"는 뉴질랜드 마오리 문화 유래. Adelaide 출신으로 마오리 유산과 호주 정체성을 함께 가진 독특한 배경.',
+      title: 'Te Haki — 독특한 미들 네임',
+      desc: '미들 네임 "Te Haki"는 마오리어 계열 이름으로 추정. Adelaide 출신으로 다문화적 배경을 가진 독특한 정체성의 투수.',
     },
   ],
 };
@@ -56,8 +56,8 @@ export const MLB_STATCAST = {
   games: [
     { date: '2024-05-26', pitches: 42, opponent: 'HOU', fbAvg: 91.9 },
     { date: '2024-06-01', pitches: 20, opponent: 'ATL', fbAvg: 91.9 },
-    { date: '2024-06-08', pitches: 52, opponent: 'OAK', fbAvg: 92.0 },
-    { date: '2024-07-06', pitches: 62, opponent: 'OAK', fbAvg: 91.6 },
+    { date: '2024-06-08', pitches: 52, opponent: 'TOR', fbAvg: 92.0 },
+    { date: '2024-07-06', pitches: 62, opponent: 'BAL', fbAvg: 91.6 },
   ],
   totals: { games: 4, ip: 9.2, era: 4.66, k: 6, pitches: 176 },
   pitchTypes: {
