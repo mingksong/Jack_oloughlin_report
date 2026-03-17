@@ -68,6 +68,39 @@ export const MLB_STATCAST = {
   },
 };
 
+// ========== RELEASE POINT (MLB 2024 Regular Season, avg across 176 pitches) ==========
+export const RELEASE_POINT = {
+  releaseZ: 5.89,       // feet - release height
+  releaseX: 1.34,       // feet - horizontal release (positive = 1B side for LHP)
+  extension: 6.42,      // feet - release extension toward plate
+  armAngle: 34.0,       // degrees
+  pitcherHeight: 6.417, // feet (6'5")
+  heightRatio: 0.918,   // releaseZ / pitcherHeight — MLB LHP avg ~0.85-0.88
+};
+
+// ========== MOVEMENT PROFILE (pfx in inches) ==========
+export const MOVEMENT_PROFILE = {
+  // O'Loughlin MLB 2024 Regular Season (Statcast pfx * 12 for inches)
+  mlb: {
+    FF: { pfxX: 9.96, pfxZ: 14.04, spin: 2221 },
+    SL: { pfxX: -2.76, pfxZ: -0.96, spin: 2395 },
+    CH: { pfxX: 12.60, pfxZ: 7.32, spin: 1526 },
+    CU: { pfxX: -10.80, pfxZ: -12.48, spin: 2421 },
+  },
+  // KBO 2024 LHP averages (calculated from trajectory data, in inches)
+  kboLhp: {
+    직구: { pfxX: 6.0, pfxZ: 10.0, stdX: 3.1, stdZ: 2.1 },
+    슬라이더: { pfxX: -1.5, pfxZ: 2.5, stdX: 3.1, stdZ: 2.4 },
+    체인지업: { pfxX: 8.4, pfxZ: 5.9, stdX: 2.9, stdZ: 2.6 },
+    커브: { pfxX: -3.7, pfxZ: -4.6, stdX: 2.9, stdZ: 3.2 },
+  },
+  // KBO 2024 LHP release point averages
+  kboLhpRelease: {
+    avgReleaseZ: 5.79, // feet
+    avgExtension: 5.8, // feet (estimated from trajectory)
+  },
+};
+
 // ========== KBO 2024 VELOCITY DISTRIBUTION (km/h) ==========
 export const KBO_VELOCITY_DIST = {
   all: {

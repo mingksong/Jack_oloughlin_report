@@ -85,10 +85,10 @@ export default function KBOScaleChart() {
       {/* Percentile Gauges */}
       <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
         <h3 className="text-sm font-semibold text-gray-700 mb-1">
-          KBO 퍼센타일 비교 (평균 구속 기준)
+          KBO 구속 퍼센타일 비교
         </h3>
         <p className="text-[10px] text-gray-400 mb-4">
-          O'Loughlin WBC 구속을 2024 KBO 리그 구속 분포와 비교
+          구속(Velocity)만을 기준으로 한 퍼센타일. 무브먼트·커맨드 등 구종의 전체 퀄리티와는 별개 지표입니다.
         </p>
 
         <div className="space-y-4">
@@ -125,7 +125,10 @@ export default function KBOScaleChart() {
 
       {/* Summary Table */}
       <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">구종별 KBO 스케일 요약</h3>
+        <h3 className="text-sm font-semibold text-gray-700 mb-1">구종별 KBO 구속 스케일 요약</h3>
+        <p className="text-[10px] text-gray-400 mb-3">
+          본 퍼센타일은 구속(km/h) 기준이며, 구종의 무브먼트·변화량·커맨드를 포함하지 않습니다.
+        </p>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>

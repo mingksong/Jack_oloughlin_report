@@ -8,13 +8,16 @@ import PitchLegend from './components/PitchLegend';
 import TwoStrikeAnalysis from './components/TwoStrikeAnalysis';
 import KBOScaleChart from './components/KBOScaleChart';
 import ScoutingGradeTable from './components/ScoutingGradeTable';
+import ReleasePointAnalysis from './components/ReleasePointAnalysis';
+import MovementProfile from './components/MovementProfile';
 
-type Tab = 'profile' | 'arsenal' | 'location' | 'kbo';
+type Tab = 'profile' | 'arsenal' | 'location' | 'movement' | 'kbo';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'profile', label: '프로필' },
   { id: 'arsenal', label: '구종분석' },
   { id: 'location', label: '로케이션' },
+  { id: 'movement', label: '무브먼트' },
   { id: 'kbo', label: 'KBO 스케일' },
 ];
 
@@ -81,6 +84,13 @@ export default function App() {
             <PitchLocationChart pitches={WBC_PITCHES} />
             <PitchLegend pitches={WBC_PITCHES} />
             <TwoStrikeAnalysis pitches={WBC_PITCHES} />
+          </div>
+        )}
+
+        {tab === 'movement' && (
+          <div className="space-y-6">
+            <MovementProfile />
+            <ReleasePointAnalysis />
           </div>
         )}
 
